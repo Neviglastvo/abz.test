@@ -1,0 +1,18 @@
+@import 'src/assets/sass/helpers/_variables'
+@import 'src/assets/sass/helpers/_mixins'
+
+.nav
+    display: flex
+    align-items: center
+    &__item
+        color: #212529
+        font-size: 14px
+        font-weight: 400
+        line-height: 60px
+        margin-right: 30px
+        +trs(300, color)
+        +h
+            text-decoration: none
+            color: $accent
+        &:last-child
+            margin-right: 0

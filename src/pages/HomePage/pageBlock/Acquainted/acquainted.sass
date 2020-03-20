@@ -1,0 +1,68 @@
+@import 'src/assets/sass/helpers/_variables'
+@import 'src/assets/sass/helpers/_mixins'
+
+.acquainted
+    display: flex
+    width: 100%
+    overflow: hidden
+
+    &__row
+        display: flex
+        align-items: center
+        margin: 0 -15px
+        +r(768)
+            flex-direction: column
+            margin: 0
+
+    &__col
+        display: flex
+        flex-direction: column
+        padding: 0 15px
+        &:nth-child(1)
+            width: 40%
+        +r(768)
+            align-items: center
+            padding: 0
+            width: 100%
+            &:nth-child(1)
+                width: 100%
+                margin-bottom: 40px
+
+    &__img
+        height: 100%
+        max-height: 285px
+        width: auto
+
+    &__title
+        margin-bottom: 30px
+        color: #212529
+        font-size: 24px
+        font-weight: 400
+        line-height: 24px
+        +r(768)
+            text-align: center
+
+    &__text
+        p
+            margin-bottom: 34px
+            color: #4c4b4b
+            font-size: 16px
+            font-weight: 400
+            line-height: 24px
+            text-align: justify
+            &:last-child
+                margin-bottom: 0
+
+    &__link
+        margin-top: 40px
+        color: $accent
+        font-size: 16px
+        font-weight: 600
+        line-height: 20px
+        +h
+            text-decoration: none
+            cursor: pointer
+            color: $accentHover
+
+
+

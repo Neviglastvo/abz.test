@@ -1,0 +1,162 @@
+@import 'src/assets/sass/helpers/_mixins'
+
+.form
+	display: flex
+	flex-direction: column
+	align-items: center
+	width: 100%
+	max-width: 468px
+	margin: 0 auto
+
+	&__item
+		width: 100%
+		display: flex
+		flex-direction: column
+		margin-bottom: 28px
+		&:last-of-type
+			margin-bottom: 0
+		&--start
+			align-items: flex-start
+		label
+			margin-bottom: 14px
+			color: #212529
+			font-size: 16px
+			font-weight: 400
+			line-height: 14px
+			+h
+				cursor: pointer
+
+		p
+			margin-top: 10px
+			margin-bottom: 0
+			color: #f44336
+			font-size: 12px
+			font-weight: 400
+			line-height: 10px
+
+	&__item-container
+		display: flex
+		align-items: center
+		justify-content: center
+		margin-bottom: 14px
+		+h
+			cursor: pointer
+		label
+			margin-bottom: 0px
+			line-height: 20px
+			+textOverflow
+
+	&__item-file
+		position: relative
+		display: flex
+		width: 100%
+		height: 100%
+		label
+
+	&__input
+		height: 38px
+		padding: 0 13px
+		border: 1px solid #ced4da
+		border-radius: 4px
+		background-color: #fff
+		color: #404040
+		// line-height: 38px
+
+		+tr
+		+placeholder
+			color: #b2b9c0
+			font-size: 16px
+			font-weight: 400
+
+
+		&:focus
+			border: 1px solid #80bdff
+			border-radius: 4px
+			box-shadow: 0 0 0 3px rgba(#80bdff, 0.1)
+
+		&.error
+			border-color: #db3445
+			box-shadow: 0 0 0 3px rgba(#db3445, 0.1)
+
+	input[type="file"]
+		width: 100%
+
+		+ label
+			+cover
+			display: flex
+			align-items: center
+			margin: 0
+			z-index: 1
+			font-weight: 400
+			line-height: 38px
+			color: #b2b9c0
+			line-height: 38px
+			background-color: #fff
+			border: 1px solid #d4d9de
+			border-radius: .25rem
+			div
+				width: 100%
+				padding: 0 13px
+				+textOverflow
+			span
+				width: 100%
+				display: flex
+				flex-grow: 1
+				width: auto
+				padding: 0 17px
+				margin: 0
+				border-left: inherit
+				background-color: #f8f7f5
+				color: #212529
+				line-height: 36px
+
+	input[type="radio"]
+		width: 0
+		height: 0
+		position: relative
+		margin-right: 26px
+		padding-right: 16px
+		padding-bottom: 16px
+		+h
+			cursor: pointer
+
+		+before
+			position: absolute
+			top: -8px
+			left: 0
+			display: block
+			width: 16px
+			height: 16px
+			border-radius: 50%
+			border: 1px solid #adb5bd
+			z-index: 0
+			+tr
+
+		+after
+			opacity: 0
+			position: absolute
+			top: -3px
+			left: 5px
+			width: 6px
+			height: 6px
+			background-color: #fff
+			box-shadow: 0.6px 0.8px 1px rgba(0, 0, 0, 0.3)
+			z-index: 1
+			border-radius: 50%
+			+tr
+
+		&:checked
+			+before
+				background-color: #007bff
+				border: 1px solid transparent
+
+			+after
+				opacity: 1
+
+	&__item-subtitle
+		color: #212529
+		font-size: 12px
+		font-weight: 400
+
+	&__action
+		margin-top: 40px
