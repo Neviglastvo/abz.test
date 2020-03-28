@@ -4,9 +4,9 @@ import { ErrorMessage, useForm } from "react-hook-form"
 import InputMask from "react-input-mask"
 import Modal from "components/Modal/Modal"
 import "./form.sass"
-
+import axios from "axios"
 const Form = props => {
-	const { userCreated, setUserCreated } = props
+	const { setUserCreated } = props
 
 	const { register, handleSubmit, errors, triggerValidation } = useForm({
 		validateCriteriaMode: "all",
@@ -14,34 +14,60 @@ const Form = props => {
 	})
 	const { request, loading } = useHttp()
 
-	const [imageName, setImageName] = useState("")
+	const [photoName, setPhotoName] = useState("Upload your photo")
+	const [photoFile, setPhotoFile] = useState("")
 	const [positions, setPositions] = useState("")
+	const [token, setToken] = useState("")
 
 	const [openPopup, setOpenPopup] = useState(false)
 
-	const onSubmit = data => {
-		console.log("actual data", data)
-		data.phone = data.phone.replace(/\s/g, "")
-
-		console.log("transformed data", data)
-		// try {
-		// 	await request("/generate", "POST", { ...values })
-		// 	// fetchComponents()
-		// } catch (error) {
-		// 	console.error(error)
-		// }
-		setOpenPopup(true)
-		setUserCreated(true)
-	}
 	const fetchPositions = useCallback(async () => {
 		const result = await request(`/positions`)
-
 		setPositions(result.positions)
+	}, [request])
+
+	const fetchToken = useCallback(async () => {
+		const result = await request(`/token`)
+		setToken(result.token)
 	}, [request])
 
 	useEffect(() => {
 		fetchPositions()
-	}, [fetchPositions])
+		fetchToken()
+	}, [fetchPositions, fetchToken])
+
+	useEffect(() => {
+		console.log("photoFile :", photoFile)
+	}, [photoFile])
+
+	const onSubmit = async (data, e) => {
+		e.preventDefault()
+
+		const formData = new FormData()
+		formData.append("position_id", data.position_id)
+		formData.append("name", data.name)
+		formData.append("email", data.email.toLowerCase())
+		formData.append("phone", data.phone.replace(/\s/g, ""))
+		formData.append("photo", photoFile)
+
+		try {
+			await axios.post(
+				"https://frontend-test-assignment-api.abz.agency/api/v1/users",
+				formData,
+				{
+					headers: {
+						"Content-Type": "multipart/form-data",
+						Token: token,
+					},
+				},
+			)
+		} catch (err) {
+			console.log("err", err)
+		}
+
+		setOpenPopup(true)
+		setUserCreated(true)
+	}
 
 	const showError = name => (
 		<ErrorMessage errors={errors} name={name}>
@@ -50,7 +76,9 @@ const Form = props => {
 				return (
 					messages &&
 					Object.entries(messages).map(([type, message]) => (
-						<p key={type}>{message}</p>
+						<p className="form__item-subtitle form__item-subtitle--error" key={type}>
+							{message}
+						</p>
 					))
 				)
 			}}
@@ -69,24 +97,25 @@ const Form = props => {
 			</Modal>
 
 			<div className="form__item">
-				<label htmlFor="name" className="form__label">
+				<label htmlFor="name" className="form__item-title">
 					Name
 				</label>
 				<input
 					id="name"
 					name="name"
+					defaultValue="Maxwell Skiles"
 					type="text"
 					className="form__input"
 					placeholder="Your name"
 					ref={register({
-						required: "Name is required.",
+						required: "The name is required",
 						minLength: {
 							value: 2,
-							message: "Min length 2.",
+							message: "The name must be at least 2 characters",
 						},
 						maxLength: {
 							value: 60,
-							message: "Max length 60.",
+							message: "The name must be less than 60 characters",
 						},
 					})}
 				/>
@@ -94,28 +123,21 @@ const Form = props => {
 			</div>
 
 			<div className="form__item">
-				<label htmlFor="email" className="form__label">
+				<label htmlFor="email" className="form__item-title">
 					Email
 				</label>
 				<input
 					id="email"
 					name="email"
+					defaultValue="imelda90@hotmail.com"
 					type="text"
 					className="form__input"
 					placeholder="Your email"
 					ref={register({
-						required: "Email is required.",
+						required: "The email is required",
 						pattern: {
 							value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-							message: "Invalid email address",
-						},
-						minLength: {
-							value: 2,
-							message: "Min length 2.",
-						},
-						maxLength: {
-							value: 100,
-							message: "Max length 100.",
+							message: "The email must be a valid email address",
 						},
 					})}
 				/>
@@ -123,20 +145,21 @@ const Form = props => {
 			</div>
 
 			<div className="form__item">
-				<label htmlFor="phone" className="form__label">
-					Phone
+				<label htmlFor="phone" className="form__item-title">
+					Phone number
 				</label>
 				<InputMask
 					id="phone"
 					name="phone"
 					type="text"
+					defaultValue="+380 12 312 31 23"
 					className="form__input"
 					mask="+380 99 999 99 99"
 					maskChar=" "
 					placeholder="+380 XX XXX XX XX"
 					// alwaysShowMask
 					inputRef={register({
-						required: "Phone is required",
+						required: "The phone field is required",
 						pattern: {
 							value: /^[+]{0,1}380\s([0-9]{2})\s([0-9]{3})\s([0-9]{2})\s([0-9]{2})$/,
 							message: "Invalid phone number",
@@ -144,20 +167,25 @@ const Form = props => {
 					})}
 				/>
 
-				<div className="form__item-subtitle">
-					Еnter phone number in openPopup format
-				</div>
+				<div className="form__item-subtitle">Enter phone number in open format</div>
 				{showError("phone")}
 			</div>
 
-			<div className="form__item form__item--start">
+			<div className="form__item form__item--alignStart">
+				<label
+					htmlFor="position_id"
+					className="form__label form__label--moreMargin"
+				>
+					Select your position
+				</label>
+
 				{positions && !loading ? (
 					positions.map(position => (
 						<div className="form__item-container" key={position.id}>
 							<input
 								type="radio"
 								id={`position-${position.id}`}
-								name="position"
+								name="position_id"
 								value={position.id}
 								ref={register({
 									required: "Put one of this pls",
@@ -170,57 +198,72 @@ const Form = props => {
 					<div>empty</div>
 				)}
 
-				{showError("position")}
+				{showError("position_id")}
 			</div>
 
 			<div className="form__item">
-				<label htmlFor="image" className="form__label">
+				<label htmlFor="photo" className="form__item-title">
 					Photo
 				</label>
 				<div className="form__item-file">
 					<input
-						id="image"
+						id="photo"
 						type="file"
-						name="image"
+						name="photo"
+						accept=".jpg, .jpeg"
 						className="form__input"
-						placeholder="asdas"
 						ref={register({
 							required: "Attach something",
 							validate: {
 								size: value => {
-									if (value[0]) {
-										if (value[0].size >= 502400) {
-											return "too heavy"
-										}
+									if (value[0] && value[0].size >= 502400) {
+										return "The photo may not be greater than 5 Mbytes"
 									}
 								},
 								extension: value => {
 									const validExt = ["image/jpg", "image/jpeg"]
 									if (value[0] && !validExt.includes(value[0].type)) {
-										console.log("true type")
-										return "wrong type"
+										return "The photo must be .jpg or .jpeg"
+									}
+								},
+								sizes: value => {
+									if (value[0]) {
+										const photo = value[0]
+										let photoWidth, photoHeight
+
+										let reader = new FileReader()
+
+										reader.onload = function(e) {
+											let img = new Image()
+											img.src = e.target.result
+
+											img.onload = function() {
+												// photo.width = this.width
+												// photo.height = this.height
+												photoWidth = this.width
+												photoHeight = this.height
+											}
+										}
+										reader.readAsDataURL(photo)
+
+										if (photoWidth < 70 || photoHeight < 70) {
+											return `The photo minimum resolution are 70x70px`
+										}
 									}
 								},
 							},
 						})}
 						onChange={e => {
-							setImageName(e.target.value)
+							setPhotoFile(e.target.files[0])
+							setPhotoName(e.target.files[0].name)
 						}}
 					/>
-					<label htmlFor="image">
-						<div>
-							{imageName !== ""
-								? imageName
-										.split("\\")
-										.pop()
-										.split("/")
-										.pop()
-								: "Upload your photo"}
-						</div>
+					<label htmlFor="photo">
+						<div>{photoName}</div>
 						<span>Browse</span>
 					</label>
 				</div>
-				{showError("image")}
+				{showError("photo")}
 			</div>
 
 			<button

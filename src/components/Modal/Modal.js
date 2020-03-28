@@ -1,11 +1,18 @@
-import React from "react"
+import React, { useRef } from "react"
 import "./modal.sass"
+import useOutsideClick from "hooks/useOutsideClick"
 
 const Modal = ({ ...props }) => {
 	const { openPopup, setOpenPopup, formTitle, btnTitle, children } = props
+	const ref = useRef()
+
+	useOutsideClick(ref, () => {
+		openPopup && setOpenPopup(!openPopup)
+	})
+
 	const content = openPopup && (
 		<div className="modal-overlay">
-			<div className="modal">
+			<div className="modal" ref={ref}>
 				<div className="modal__container">
 					<div className="modal__title">
 						{formTitle}

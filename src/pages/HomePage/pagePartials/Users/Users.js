@@ -9,49 +9,43 @@ const Users = props => {
 	const { request, loading } = useHttp()
 
 	const [users, setUsers] = useState()
-	const [page, setPage] = useState(1)
 	const [userCount, setUserCount] = useState(6)
 	const [totalPages, setTotalPages] = useState()
 
 	const fetchUsers = useCallback(
-		async (page, count) => {
-			const result = await request(`/users?page=${page}&count=${count}`)
+		async count => {
+			const result = await request(`/users?count=${count}`)
 
-			// console.log("result :", result)
 			setUsers(result.users)
-			setUserCount(result.count)
-			setPage(result.page)
 			setTotalPages(result.total_pages)
 		},
 		[request],
 	)
 
 	useEffect(() => {
-		fetchUsers(page, userCount)
-	}, [fetchUsers, page, userCount])
+		console.log("users :", users)
+		console.log("userCount :", userCount)
+	}, [users, userCount])
 
 	useEffect(() => {
-		console.log("page :", page)
-		console.log("userCount :", userCount)
-		console.log("USERS userCreated :", userCreated)
+		fetchUsers(userCount)
+	}, [fetchUsers, userCount])
+
+	useEffect(() => {
 		if (userCreated) {
-			setPage(1)
 			setUserCount(6)
 			setUserCreated(false)
 			return
 		}
-		setPage(page)
 		setUserCount(userCount)
-	}, [page, userCreated, userCount, setUserCreated])
+	}, [userCreated, userCount, setUserCreated, fetchUsers])
 
 	const handleClick = () => {
-		// console.log("click :", "click")
 		setUserCount(userCount + 6)
-		setPage(page)
 	}
 
 	if (loading) {
-		return <div className="empty">Loading</div>
+		return <div>Loading</div>
 	} else {
 		return (
 			<div className="users">
@@ -72,7 +66,11 @@ const Users = props => {
 				{totalPages === 1 ? (
 					""
 				) : (
-					<div className="users__action button" onClick={handleClick}>
+					<div
+						className="users__action button"
+						onClick={handleClick}
+						disabled={loading && true}
+					>
 						Show more
 					</div>
 				)}

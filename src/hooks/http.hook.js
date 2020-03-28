@@ -8,10 +8,10 @@ export const useHttp = () => {
 		async (url, method = "GET", body = null, headers = {}) => {
 			const baseUrl = "https://frontend-test-assignment-api.abz.agency/api/v1"
 			try {
-				if (body) {
-					body = JSON.stringify(body)
-					headers["Content-Type"] = "application/json"
-				}
+				// if (body) {
+				// 	body = JSON.stringify(body)
+				// 	headers["Content-Type"] = "application/json"
+				// }
 
 				const response = await fetch(`${baseUrl}${url}`, { method, body, headers })
 				const data = await response.json()

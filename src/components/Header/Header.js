@@ -10,12 +10,8 @@ const Header = props => {
 	return (
 		<div className="header">
 			<div className="header__container">
-				<div className="header__logo">
-					<Logo />
-				</div>
-				<div className="header__nav">
-					<Nav />
-				</div>
+				<Logo />
+				<Nav />
 				<Hamburger open={open} setOpen={setOpen} />
 			</div>
 		</div>
