@@ -192,6 +192,7 @@ const Form = props => {
 									required: "Put one of this pls",
 								})}
 							/>
+							<span></span>
 							<label htmlFor={`position-${position.id}`}>{position.name}</label>
 						</div>
 					))
