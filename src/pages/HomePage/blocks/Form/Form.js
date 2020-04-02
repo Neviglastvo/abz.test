@@ -36,14 +36,6 @@ const Form = props => {
 		fetchToken()
 	}, [fetchPositions, fetchToken])
 
-	useEffect(() => {
-		console.log("token :", token)
-	}, [token])
-
-	useEffect(() => {
-		console.log("photoFile :", photoFile)
-	}, [photoFile])
-
 	const onSubmit = async (data, e) => {
 		e.preventDefault()
 
@@ -106,7 +98,6 @@ const Form = props => {
 					name="name"
 					defaultValue="Maxwell Skiles"
 					type="text"
-					className="form__input"
 					placeholder="Your name"
 					ref={register({
 						required: "The name is required",
@@ -132,7 +123,6 @@ const Form = props => {
 					name="email"
 					defaultValue="imelda90@hotmail.com"
 					type="text"
-					className="form__input"
 					placeholder="Your email"
 					ref={register({
 						required: "The email is required",
@@ -154,7 +144,6 @@ const Form = props => {
 					name="phone"
 					type="text"
 					defaultValue="+380 12 312 31 23"
-					className="form__input"
 					mask="+380 99 999 99 99"
 					maskChar=" "
 					placeholder="+380 XX XXX XX XX"
@@ -213,7 +202,6 @@ const Form = props => {
 						type="file"
 						name="photo"
 						accept=".jpg, .jpeg"
-						className="form__input"
 						ref={register({
 							required: "Attach something",
 							validate: {
