@@ -46,20 +46,16 @@ const Form = props => {
 		formData.append("phone", data.phone.replace(/\s/g, ""))
 		formData.append("photo", photoFile)
 
-		data.email = data.email.toLowerCase()
-		data.phone = data.phone.replace(/\s/g, "")
-		data.photo = data.photo[0]
-
 		try {
-			await request("/users", "POST", formData, {
+			const res = await request("/users", "POST", formData, {
 				Token: token,
+			}).then(res => {
+				setOpenPopup(true)
+				setUserCreated(true)
 			})
 		} catch (err) {
 			console.log("err", err)
 		}
-
-		setOpenPopup(true)
-		setUserCreated(true)
 	}
 
 	const showError = name => (
