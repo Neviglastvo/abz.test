@@ -1,6 +1,5 @@
 import React from "react"
 import EllipsisWithTooltip from "react-ellipsis-with-tooltip"
-
 import "./UserCard.sass"
 
 const UserCard = props => {

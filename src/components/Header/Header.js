@@ -1,8 +1,7 @@
+import Hamburger from "components/Hamburger/Hamburger"
+import Logo from "components/Logo/Logo"
+import Nav from "components/Nav/Nav"
 import React from "react"
-
-import Hamburger from "../Hamburger/Hamburger"
-import Nav from "../Nav/Nav"
-import Logo from "../Logo/Logo"
 import "./header.sass"
 
 const Header = props => {

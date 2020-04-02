@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "react-scroll"
 import "./hero.sass"
 
 const Hero = () => {
@@ -14,7 +15,7 @@ const Hero = () => {
 						/img/hero/heroBg_1486.jpg 1486w,
 						/img/hero/heroBg_2560.jpg 2560w"
 					src="/img/hero/heroBg_2560.jpg"
-					alt=""
+					alt="Test assignment bg"
 				/>
 			</picture>
 
@@ -22,6 +23,7 @@ const Hero = () => {
 				<h1 className="hero__title">
 					Test assignment <br /> for Frontend <br /> Developer position
 				</h1>
+
 				<div className="hero__subtitle">
 					We kindly remind you that your test assignment should be submitted as a
 					link to github/bitbucket repository.{" "}
@@ -31,9 +33,16 @@ const Hero = () => {
 						photo has to scale in the banner area on the different screens.
 					</span>
 				</div>
-				<a href="#register" className="hero__action button">
+
+				<Link
+					className="hero__action button"
+					to="register"
+					spy={false}
+					smooth={true}
+					duration={500}
+				>
 					Sign up now
-				</a>
+				</Link>
 			</div>
 		</div>
 	)

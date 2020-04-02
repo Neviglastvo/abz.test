@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react"
+import Acquainted from "pages/HomePage/blocks/Acquainted/Acquainted"
+import Form from "pages/HomePage/blocks/Form/Form"
+import Hero from "pages/HomePage/blocks/Hero/Hero"
+import Users from "pages/HomePage/blocks/Users/Users/Users"
+import React, { useEffect, useState } from "react"
 import "./homePage.sass"
-import Acquainted from "./pageBlock/Acquainted/Acquainted"
-import Form from "./pagePartials/Form/Form"
-import Users from "./pagePartials/Users/Users"
-import Hero from "./pageBlock/Hero/Hero"
 
 const HomePage = () => {
 	const [userCreated, setUserCreated] = useState(false)
@@ -19,30 +19,30 @@ const HomePage = () => {
 			</div>
 			<div className="homePage__item homePage__item--acquainted ">
 				<div className="homePage__item-container ">
-					<h3 className="homePage__title">Let's get acquainted</h3>
+					<h2 className="homePage__title">Let's get acquainted</h2>
 					<Acquainted />
 				</div>
 			</div>
 			<div className="homePage__item homePage__item--users">
 				<div className="homePage__item-container ">
-					<h3 className="homePage__title homePage__title--withSubtitle">
+					<h2 className="homePage__title homePage__title--withSubtitle">
 						Our cheerful users
-					</h3>
-					<h4 className="homePage__subtitle">
+					</h2>
+					<h3 className="homePage__subtitle">
 						Attention! Sorting users by registration date
-					</h4>
+					</h3>
 					<Users userCreated={userCreated} setUserCreated={setUserCreated} />
 				</div>
 			</div>
 			<div id="register" className="homePage__item homePage__item ">
 				<div className="homePage__item-container ">
-					<h3 className="homePage__title homePage__title--withSubtitle">
+					<h2 className="homePage__title homePage__title--withSubtitle">
 						Register to get a work
-					</h3>
-					<h4 className="homePage__subtitle homePage__subtitle--mb40">
+					</h2>
+					<h3 className="homePage__subtitle homePage__subtitle--mb40">
 						Attention! After successful registration and alert, update the list of
 						users in the block from the top
-					</h4>
+					</h3>
 					<Form userCreated={userCreated} setUserCreated={setUserCreated} />
 				</div>
 			</div>

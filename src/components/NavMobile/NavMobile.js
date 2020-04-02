@@ -1,7 +1,6 @@
 import Logo from "components/Logo/Logo"
 import Nav from "components/Nav/Nav"
 import useOutsideClick from "hooks/useOutsideClick"
-
 import React, { useRef } from "react"
 import "./navMobile.sass"
 
@@ -22,7 +21,7 @@ const NavMobile = props => {
 		<div className={`navMobile ${open ? "active" : ""}`}>
 			<div className="navMobile__menu" ref={ref}>
 				<div className="navMobile__logo">
-					<Logo />
+					<Logo handleClick={handleClick} />
 				</div>
 				<div className="navMobile__item">
 					<Nav handleClick={handleClick} />

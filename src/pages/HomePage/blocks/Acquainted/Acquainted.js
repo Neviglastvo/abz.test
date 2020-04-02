@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "react-scroll"
 import "./acquainted.sass"
 
 const Acquainted = () => {
@@ -27,9 +28,16 @@ const Acquainted = () => {
 							page P​SD mockup​ into HTML5/CSS3.
 						</p>
 					</div>
-					<a href="#register" className="acquainted__link">
+
+					<Link
+						className="acquainted__link"
+						to="register"
+						spy={false}
+						smooth={true}
+						duration={500}
+					>
 						Sign up now
-					</a>
+					</Link>
 				</div>
 			</div>
 		</div>

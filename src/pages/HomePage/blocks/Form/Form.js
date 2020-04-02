@@ -1,14 +1,14 @@
+import Modal from "components/Modal/Modal"
 import { useHttp } from "hooks/http.hook"
-import React, { useEffect, useState, useCallback } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { ErrorMessage, useForm } from "react-hook-form"
 import InputMask from "react-input-mask"
-import Modal from "components/Modal/Modal"
 import "./form.sass"
-import axios from "axios"
+
 const Form = props => {
 	const { setUserCreated } = props
 
-	const { register, handleSubmit, errors, triggerValidation } = useForm({
+	const { register, handleSubmit, errors } = useForm({
 		validateCriteriaMode: "all",
 		mode: "onBlur",
 	})
@@ -37,6 +37,10 @@ const Form = props => {
 	}, [fetchPositions, fetchToken])
 
 	useEffect(() => {
+		console.log("token :", token)
+	}, [token])
+
+	useEffect(() => {
 		console.log("photoFile :", photoFile)
 	}, [photoFile])
 
@@ -50,17 +54,14 @@ const Form = props => {
 		formData.append("phone", data.phone.replace(/\s/g, ""))
 		formData.append("photo", photoFile)
 
+		data.email = data.email.toLowerCase()
+		data.phone = data.phone.replace(/\s/g, "")
+		data.photo = data.photo[0]
+
 		try {
-			await axios.post(
-				"https://frontend-test-assignment-api.abz.agency/api/v1/users",
-				formData,
-				{
-					headers: {
-						"Content-Type": "multipart/form-data",
-						Token: token,
-					},
-				},
-			)
+			await request("/users", "POST", formData, {
+				Token: token,
+			})
 		} catch (err) {
 			console.log("err", err)
 		}
@@ -238,8 +239,6 @@ const Form = props => {
 											img.src = e.target.result
 
 											img.onload = function() {
-												// photo.width = this.width
-												// photo.height = this.height
 												photoWidth = this.width
 												photoHeight = this.height
 											}

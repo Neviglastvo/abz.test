@@ -1,6 +1,6 @@
+import useOutsideClick from "hooks/useOutsideClick"
 import React, { useRef } from "react"
 import "./modal.sass"
-import useOutsideClick from "hooks/useOutsideClick"
 
 const Modal = ({ ...props }) => {
 	const { openPopup, setOpenPopup, formTitle, btnTitle, children } = props

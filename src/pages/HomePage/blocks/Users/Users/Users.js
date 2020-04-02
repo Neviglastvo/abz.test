@@ -1,6 +1,6 @@
-import React, { useState, useCallback, useEffect } from "react"
-import UserCard from "pages/HomePage/pagePartials/cards/UserCard"
 import { useHttp } from "hooks/http.hook"
+import UserCard from "pages/HomePage/blocks/Users/UserCard/UserCard"
+import React, { useCallback, useEffect, useState } from "react"
 import "./users.sass"
 
 const Users = props => {
@@ -35,6 +35,7 @@ const Users = props => {
 		if (userCreated) {
 			setUserCount(6)
 			setUserCreated(false)
+			fetchUsers(userCount)
 			return
 		}
 		setUserCount(userCount)
