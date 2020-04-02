@@ -92,7 +92,7 @@ const Form = props => {
 				<input
 					id="name"
 					name="name"
-					defaultValue="Maxwell Skiles"
+					// defaultValue="Maxwell Skiles"
 					type="text"
 					placeholder="Your name"
 					ref={register({
@@ -117,7 +117,7 @@ const Form = props => {
 				<input
 					id="email"
 					name="email"
-					defaultValue="imelda90@hotmail.com"
+					// defaultValue="imelda90@hotmail.com"
 					type="text"
 					placeholder="Your email"
 					ref={register({
@@ -139,7 +139,7 @@ const Form = props => {
 					id="phone"
 					name="phone"
 					type="text"
-					defaultValue="+380 12 312 31 23"
+					// defaultValue="+380 12 312 31 23"
 					mask="+380 99 999 99 99"
 					maskChar=" "
 					placeholder="+380 XX XXX XX XX"
